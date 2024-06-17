@@ -1,0 +1,69 @@
+-- Pull in the wezterm API
+local wezterm = require("wezterm")
+
+-- This will hold the configuration.
+local config = wezterm.config_builder()
+
+-- This is where you actually apply your config choices
+
+-- For example, changing the color scheme:
+config.color_scheme = "Catppuccin Frappe"
+
+
+
+config.font = wezterm.font("Operator Mono")
+config.font_size = 14
+
+config.enable_tab_bar = true
+
+
+
+--multiplexing
+-- Leader is the same as my old tmux prefix
+config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.keys = {
+  -- splitting
+  {
+    mods   = "LEADER",
+    key    = "-",
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' }
+  },
+  {
+    mods   = "LEADER",
+    key    = "=",
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }
+  },
+  { 
+    key = "LeftArrow", 
+    mods = "LEADER",       
+    action=wezterm.action{ActivatePaneDirection="Left"}
+  },
+  { 
+    key = "DownArrow", 
+    mods = "LEADER",       
+    action=wezterm.action{ActivatePaneDirection="Down"}
+  },
+  { 
+    key = "UpArrow", 
+    mods = "LEADER",      
+    action=wezterm.action{ActivatePaneDirection="Up"}
+  },
+  { 
+    key = "RightArrow", 
+    mods = "LEADER",      
+    action=wezterm.action{ActivatePaneDirection="Right"}
+  },
+  { 
+    key = "w", 
+    mods = "LEADER", 
+    action = wezterm.action{CloseCurrentPane={confirm=true}
+  },
+}
+}
+
+
+
+
+
+-- and finally, return the configuration to wezterm
+return config
